@@ -8,7 +8,7 @@ class UsersRepository implements IUsersRepository {
   final Dio _dio;
 
   UsersRepository()
-      : _dio = DioClient.create(baseUrl: ApiEndpoints.usersBaseUrl);
+      : _dio = DioClient.create(baseUrl: ApiEndpoints.baseUrl);
 
   @override
   Future<List<User>> fetchUsers() async {

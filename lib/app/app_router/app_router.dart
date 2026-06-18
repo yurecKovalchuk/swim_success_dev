@@ -7,6 +7,7 @@ class AppRouter extends RootStackRouter {
   List<AutoRoute> get routes => [
         AutoRoute(
           page: AppShellRoute.page,
+          initial: true,
           children: [
             AutoRoute(page: PaceSelectorRoute.page, initial: true),
             AutoRoute(page: UsersListRoute.page),

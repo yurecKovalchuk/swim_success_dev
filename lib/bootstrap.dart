@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:logging/logging.dart';
 
 import 'app/di/injector.dart';
@@ -14,8 +13,6 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
 
 Future<void> _initialize(FutureOr<Widget> Function() builder) async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  await dotenv.load();
 
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
@@ -39,6 +36,5 @@ void _initLogger() {
 }
 
 void _handleError(Object error, StackTrace stack) {
-  final logger = Logger('bootstrap');
-  logger.severe('Uncaught error', error, stack);
+  debugPrint('[bootstrap] ERROR: $error\n$stack');
 }
