@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:swim_success_dev/core/extensions/l10n_extension.dart';
 import 'package:swim_success_dev/domain/models/user.dart';
 
 @RoutePage()
@@ -61,46 +62,46 @@ class UserDetailScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _SectionHeader(label: 'Contact'),
+                  _SectionHeader(label: context.l10n.detailContact),
                   const SizedBox(height: 12),
                   _DetailRow(
                     icon: Icons.email_outlined,
-                    label: 'Email',
+                    label: context.l10n.detailEmail,
                     value: user.email,
                   ),
                   const Divider(height: 24),
                   _DetailRow(
                     icon: Icons.phone_outlined,
-                    label: 'Phone',
+                    label: context.l10n.detailPhone,
                     value: user.phone,
                   ),
                   const Divider(height: 24),
                   _DetailRow(
                     icon: Icons.language_outlined,
-                    label: 'Website',
+                    label: context.l10n.detailWebsite,
                     value: user.website,
                   ),
                   const SizedBox(height: 24),
-                  _SectionHeader(label: 'Address'),
+                  _SectionHeader(label: context.l10n.detailAddress),
                   const SizedBox(height: 12),
                   _DetailRow(
                     icon: Icons.location_on_outlined,
-                    label: 'City',
+                    label: context.l10n.detailCity,
                     value:
                         '${user.address.suite}, ${user.address.street}\n${user.address.city}, ${user.address.zipcode}',
                   ),
                   const SizedBox(height: 24),
-                  _SectionHeader(label: 'Company'),
+                  _SectionHeader(label: context.l10n.detailCompany),
                   const SizedBox(height: 12),
                   _DetailRow(
                     icon: Icons.business_outlined,
-                    label: 'Name',
+                    label: context.l10n.detailCompanyName,
                     value: user.company.name,
                   ),
                   const Divider(height: 24),
                   _DetailRow(
                     icon: Icons.format_quote_outlined,
-                    label: 'Catch phrase',
+                    label: context.l10n.detailCatchPhrase,
                     value: user.company.catchPhrase,
                   ),
                 ],

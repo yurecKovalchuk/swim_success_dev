@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:swim_success_dev/app/app_router/app_router.gr.dart';
+import 'package:swim_success_dev/core/extensions/l10n_extension.dart';
 import 'package:swim_success_dev/features/users/bloc/users_cubit.dart';
 import 'package:swim_success_dev/features/users/bloc/users_state.dart';
 import 'package:swim_success_dev/features/users/widgets/user_list_tile.dart';
@@ -32,7 +33,7 @@ class _UsersListScreenState extends State<UsersListScreen> {
           final cubit = context.read<UsersCubit>();
           return Scaffold(
             appBar: AppBar(
-              title: const Text('Users'),
+              title: Text(context.l10n.usersTitle),
               centerTitle: true,
               bottom: PreferredSize(
                 preferredSize: const Size.fromHeight(60),
@@ -43,7 +44,7 @@ class _UsersListScreenState extends State<UsersListScreen> {
                         prev.searchQuery != curr.searchQuery,
                     builder: (context, state) => SearchBar(
                       controller: _searchController,
-                      hintText: 'Search by name or email…',
+                      hintText: context.l10n.usersSearchHint,
                       leading: const Icon(Icons.search),
                       trailing: [
                         if (state.searchQuery.isNotEmpty)
@@ -91,13 +92,13 @@ class _UsersList extends StatelessWidget {
     final users = state.filteredUsers;
 
     if (users.isEmpty) {
-      return const Center(
+      return Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.search_off, size: 48),
-            SizedBox(height: 12),
-            Text('No users found'),
+            const Icon(Icons.search_off, size: 48),
+            const SizedBox(height: 12),
+            Text(context.l10n.usersEmpty),
           ],
         ),
       );
@@ -133,9 +134,12 @@ class _ErrorView extends StatelessWidget {
           Icon(Icons.error_outline,
               size: 48, color: Theme.of(context).colorScheme.error),
           const SizedBox(height: 12),
-          const Text('Failed to load users'),
+          Text(context.l10n.usersErrorTitle),
           const SizedBox(height: 16),
-          FilledButton.tonal(onPressed: onRetry, child: const Text('Retry')),
+          FilledButton.tonal(
+            onPressed: onRetry,
+            child: Text(context.l10n.usersRetry),
+          ),
         ],
       ),
     );
