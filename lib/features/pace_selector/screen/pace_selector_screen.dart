@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:swim_success_dev/app/app_shell.dart';
 import 'package:swim_success_dev/core/extensions/l10n_extension.dart';
 import 'package:swim_success_dev/features/pace_selector/bloc/pace_selector_cubit.dart';
 import 'package:swim_success_dev/features/pace_selector/bloc/pace_selector_state.dart';
@@ -56,8 +57,11 @@ class _PaceSelectorView extends StatelessWidget {
           final sliderValue =
               state.paceSeconds.toDouble().clamp(_kSliderMin, _kSliderMax);
 
+          final bottomInset = MediaQuery.of(context).padding.bottom;
           return SingleChildScrollView(
-            padding: const EdgeInsets.all(24),
+            padding: EdgeInsets.fromLTRB(
+              24, 24, 24, bottomInset + kFloatingNavBarHeight,
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
