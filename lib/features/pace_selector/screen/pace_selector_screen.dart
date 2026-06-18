@@ -88,21 +88,13 @@ class _PaceSelectorView extends StatelessWidget {
                           onChanged: cubit.setPaceFromSlider,
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 12),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: _kTickLabels.entries
-                              .map(
-                                (e) => Text(
-                                  e.value,
-                                  style: theme.textTheme.bodySmall?.copyWith(
-                                    color: theme.colorScheme.onSurface
-                                        .withAlpha(160),
-                                  ),
-                                ),
-                              )
-                              .toList(),
+                      _SliderTickLabels(
+                        tickLabels: _kTickLabels,
+                        sliderMin: _kSliderMin,
+                        sliderMax: _kSliderMax,
+                        thumbRadius: 10,
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          color: theme.colorScheme.onSurface.withAlpha(160),
                         ),
                       ),
                     ],
@@ -214,6 +206,47 @@ class _SectionCard extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class _SliderTickLabels extends StatelessWidget {
+  final Map<int, String> tickLabels;
+  final double sliderMin;
+  final double sliderMax;
+  final double thumbRadius;
+  final TextStyle? style;
+
+  const _SliderTickLabels({
+    required this.tickLabels,
+    required this.sliderMin,
+    required this.sliderMax,
+    required this.thumbRadius,
+    this.style,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final w = constraints.maxWidth;
+        final range = sliderMax - sliderMin;
+
+        return SizedBox(
+          height: 20,
+          child: Stack(
+            children: tickLabels.entries.map((entry) {
+              final frac = (entry.key - sliderMin) / range;
+              // account for thumb padding so label aligns with thumb position
+              final xFrac = (thumbRadius + frac * (w - 2 * thumbRadius)) / w;
+              return Align(
+                alignment: Alignment(xFrac * 2 - 1, 0),
+                child: Text(entry.value, style: style),
+              );
+            }).toList(),
+          ),
+        );
+      },
     );
   }
 }
