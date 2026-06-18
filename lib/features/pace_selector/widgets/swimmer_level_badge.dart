@@ -3,8 +3,13 @@ import 'package:swim_success_dev/features/pace_selector/models/swimmer_level.dar
 
 class SwimmerLevelBadge extends StatelessWidget {
   final SwimmerLevel level;
+  final String label;
 
-  const SwimmerLevelBadge({super.key, required this.level});
+  const SwimmerLevelBadge({
+    super.key,
+    required this.level,
+    required this.label,
+  });
 
   Color get _color {
     switch (level) {
@@ -35,7 +40,7 @@ class SwimmerLevelBadge extends StatelessWidget {
           Icon(Icons.pool, color: _color, size: 18),
           const SizedBox(width: 8),
           Text(
-            level.label,
+            label,
             style: TextStyle(
               color: _color,
               fontWeight: FontWeight.bold,

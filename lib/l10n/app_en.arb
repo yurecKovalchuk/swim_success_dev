@@ -1,0 +1,42 @@
+{
+  "@@locale": "en",
+
+  "appTitle": "Swim Success",
+
+  "navPace": "Pace",
+  "navUsers": "Users",
+
+  "paceSelectorTitle": "Pace Selector",
+  "paceTargetPace": "Target Pace",
+  "pacePer100m": "per 100m",
+  "paceSectionLabel": "Pace",
+  "paceDetectedLevel": "Detected Level",
+  "paceContinue": "Continue",
+  "paceReset": "Reset",
+  "paceSubmitSuccess": "Pace submitted successfully!",
+
+  "levelBeginner": "Beginner",
+  "levelIntermediate": "Intermediate",
+  "levelAdvanced": "Advanced",
+  "levelElite": "Elite",
+  "levelBeginnerDesc": "Pace > 2:30 / 100m",
+  "levelIntermediateDesc": "Pace 2:00 – 2:30 / 100m",
+  "levelAdvancedDesc": "Pace 1:30 – 2:00 / 100m",
+  "levelEliteDesc": "Pace < 1:30 / 100m",
+
+  "usersTitle": "Users",
+  "usersSearchHint": "Search by name or email…",
+  "usersEmpty": "No users found",
+  "usersErrorTitle": "Failed to load users",
+  "usersRetry": "Retry",
+
+  "detailContact": "Contact",
+  "detailAddress": "Address",
+  "detailCompany": "Company",
+  "detailEmail": "Email",
+  "detailPhone": "Phone",
+  "detailWebsite": "Website",
+  "detailCity": "City",
+  "detailCompanyName": "Name",
+  "detailCatchPhrase": "Catch phrase"
+}

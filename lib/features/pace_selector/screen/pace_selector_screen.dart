@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:swim_success_dev/core/extensions/l10n_extension.dart';
 import 'package:swim_success_dev/features/pace_selector/bloc/pace_selector_cubit.dart';
 import 'package:swim_success_dev/features/pace_selector/bloc/pace_selector_state.dart';
 import 'package:swim_success_dev/features/pace_selector/widgets/min_sec_input.dart';
@@ -36,21 +37,22 @@ class _PaceSelectorView extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Pace Selector'),
+        title: Text(context.l10n.paceSelectorTitle),
         centerTitle: true,
       ),
       body: BlocConsumer<PaceSelectorCubit, PaceSelectorState>(
         listener: (context, state) {
           if (state.status == PaceSubmitStatus.success) {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('Pace submitted successfully!'),
+              SnackBar(
+                content: Text(context.l10n.paceSubmitSuccess),
                 backgroundColor: Colors.green,
               ),
             );
           }
         },
         builder: (context, state) {
+          final l10n = context.l10n;
           final sliderValue =
               state.paceSeconds.toDouble().clamp(_kSliderMin, _kSliderMax);
 
@@ -60,8 +62,8 @@ class _PaceSelectorView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 _SectionCard(
-                  title: 'Target Pace',
-                  subtitle: 'per 100m',
+                  title: l10n.paceTargetPace,
+                  subtitle: l10n.pacePer100m,
                   child: MinSecInput(
                     minutes: state.minutes,
                     seconds: state.seconds,
@@ -71,7 +73,7 @@ class _PaceSelectorView extends StatelessWidget {
                 ),
                 const SizedBox(height: 16),
                 _SectionCard(
-                  title: 'Pace',
+                  title: l10n.paceSectionLabel,
                   child: Column(
                     children: [
                       SliderTheme(
@@ -102,16 +104,18 @@ class _PaceSelectorView extends StatelessWidget {
                 ),
                 const SizedBox(height: 16),
                 _SectionCard(
-                  title: 'Detected Level',
+                  title: l10n.paceDetectedLevel,
                   child: Column(
                     children: [
-                      SwimmerLevelBadge(level: state.swimmerLevel),
+                      SwimmerLevelBadge(
+                        level: state.swimmerLevel,
+                        label: state.swimmerLevel.localizedLabel(l10n),
+                      ),
                       const SizedBox(height: 8),
                       Text(
-                        state.swimmerLevel.description,
+                        state.swimmerLevel.localizedDescription(l10n),
                         style: theme.textTheme.bodySmall?.copyWith(
-                          color:
-                              theme.colorScheme.onSurface.withAlpha(150),
+                          color: theme.colorScheme.onSurface.withAlpha(150),
                         ),
                         textAlign: TextAlign.center,
                       ),
@@ -144,9 +148,9 @@ class _PaceSelectorView extends StatelessWidget {
                               color: Colors.white,
                             ),
                           )
-                        : const Text(
-                            'Continue',
-                            style: TextStyle(fontSize: 16),
+                        : Text(
+                            l10n.paceContinue,
+                            style: const TextStyle(fontSize: 16),
                           ),
                   ),
                 ),
@@ -155,7 +159,7 @@ class _PaceSelectorView extends StatelessWidget {
                     padding: const EdgeInsets.only(top: 8),
                     child: TextButton(
                       onPressed: cubit.reset,
-                      child: const Text('Reset'),
+                      child: Text(l10n.paceReset),
                     ),
                   ),
               ],

@@ -1,0 +1,42 @@
+{
+  "@@locale": "uk",
+
+  "appTitle": "Swim Success",
+
+  "navPace": "Темп",
+  "navUsers": "Користувачі",
+
+  "paceSelectorTitle": "Вибір темпу",
+  "paceTargetPace": "Цільовий темп",
+  "pacePer100m": "на 100м",
+  "paceSectionLabel": "Темп",
+  "paceDetectedLevel": "Рівень плавця",
+  "paceContinue": "Продовжити",
+  "paceReset": "Скинути",
+  "paceSubmitSuccess": "Темп успішно надіслано!",
+
+  "levelBeginner": "Початківець",
+  "levelIntermediate": "Середній",
+  "levelAdvanced": "Просунутий",
+  "levelElite": "Еліта",
+  "levelBeginnerDesc": "Темп > 2:30 / 100м",
+  "levelIntermediateDesc": "Темп 2:00 – 2:30 / 100м",
+  "levelAdvancedDesc": "Темп 1:30 – 2:00 / 100м",
+  "levelEliteDesc": "Темп < 1:30 / 100м",
+
+  "usersTitle": "Користувачі",
+  "usersSearchHint": "Пошук за іменем або email…",
+  "usersEmpty": "Користувачів не знайдено",
+  "usersErrorTitle": "Не вдалося завантажити користувачів",
+  "usersRetry": "Повторити",
+
+  "detailContact": "Контакти",
+  "detailAddress": "Адреса",
+  "detailCompany": "Компанія",
+  "detailEmail": "Email",
+  "detailPhone": "Телефон",
+  "detailWebsite": "Сайт",
+  "detailCity": "Місто",
+  "detailCompanyName": "Назва",
+  "detailCatchPhrase": "Слоган"
+}

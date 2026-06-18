@@ -1,32 +1,34 @@
+import 'package:swim_success_dev/l10n/app_localizations.dart';
+
 enum SwimmerLevel {
   beginner,
   intermediate,
   advanced,
   elite;
 
-  String get label {
+  String localizedLabel(AppLocalizations l10n) {
     switch (this) {
       case SwimmerLevel.beginner:
-        return 'Beginner';
+        return l10n.levelBeginner;
       case SwimmerLevel.intermediate:
-        return 'Intermediate';
+        return l10n.levelIntermediate;
       case SwimmerLevel.advanced:
-        return 'Advanced';
+        return l10n.levelAdvanced;
       case SwimmerLevel.elite:
-        return 'Elite';
+        return l10n.levelElite;
     }
   }
 
-  String get description {
+  String localizedDescription(AppLocalizations l10n) {
     switch (this) {
       case SwimmerLevel.beginner:
-        return 'Pace > 2:30 / 100m';
+        return l10n.levelBeginnerDesc;
       case SwimmerLevel.intermediate:
-        return 'Pace 2:00 – 2:30 / 100m';
+        return l10n.levelIntermediateDesc;
       case SwimmerLevel.advanced:
-        return 'Pace 1:30 – 2:00 / 100m';
+        return l10n.levelAdvancedDesc;
       case SwimmerLevel.elite:
-        return 'Pace < 1:30 / 100m';
+        return l10n.levelEliteDesc;
     }
   }
 
