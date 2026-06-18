@@ -5,6 +5,13 @@ import 'package:swim_success_dev/app/app_router/app_router.gr.dart';
 class AppRouter extends RootStackRouter {
   @override
   List<AutoRoute> get routes => [
-        AutoRoute(page: PaceSelectorRoute.page, initial: true),
+        AutoRoute(
+          page: AppShellRoute.page,
+          children: [
+            AutoRoute(page: PaceSelectorRoute.page, initial: true),
+            AutoRoute(page: UsersListRoute.page),
+          ],
+        ),
+        AutoRoute(page: UserDetailRoute.page),
       ];
 }
