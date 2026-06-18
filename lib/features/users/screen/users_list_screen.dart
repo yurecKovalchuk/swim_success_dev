@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:swim_success_dev/app/app_router/app_router.gr.dart';
+import 'package:swim_success_dev/app/app_shell.dart';
 import 'package:swim_success_dev/core/extensions/l10n_extension.dart';
 import 'package:swim_success_dev/features/users/bloc/users_cubit.dart';
 import 'package:swim_success_dev/features/users/bloc/users_state.dart';
@@ -104,10 +105,14 @@ class _UsersList extends StatelessWidget {
       );
     }
 
+    final bottomInset = MediaQuery.of(context).padding.bottom;
     return RefreshIndicator(
       onRefresh: cubit.fetchUsers,
       child: ListView.separated(
-        padding: const EdgeInsets.symmetric(vertical: 8),
+        padding: EdgeInsets.only(
+          top: 8,
+          bottom: bottomInset + kFloatingNavBarHeight,
+        ),
         itemCount: users.length,
         separatorBuilder: (_, _) => const Divider(height: 1),
         itemBuilder: (context, index) => UserListTile(
