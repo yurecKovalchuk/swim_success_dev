@@ -7,7 +7,7 @@ import 'package:swim_success_dev/domain/repositories/i_pace_repository.dart';
 class PaceRepository implements IPaceRepository {
   final Dio _dio;
 
-  PaceRepository() : _dio = DioClient.create(baseUrl: ApiEndpoints.paceBaseUrl);
+  PaceRepository() : _dio = DioClient.create(baseUrl: ApiEndpoints.baseUrl);
 
   @override
   Future<void> submitPace(PaceRequest request) async {
