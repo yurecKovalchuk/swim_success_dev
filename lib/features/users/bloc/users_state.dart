@@ -20,7 +20,7 @@ class UsersState {
     final q = searchQuery.toLowerCase();
     return users
         .where((u) =>
-            '${u.firstName} ${u.lastName}'.toLowerCase().contains(q) ||
+            u.name.toLowerCase().contains(q) ||
             u.email.toLowerCase().contains(q))
         .toList();
   }
