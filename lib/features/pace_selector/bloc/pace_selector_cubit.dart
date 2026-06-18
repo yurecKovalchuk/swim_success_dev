@@ -25,8 +25,13 @@ class PaceSelectorCubit extends Cubit<PaceSelectorState> {
     ));
   }
 
-  void setDistance(double distance) {
-    emit(state.copyWith(distanceMeters: distance));
+  void setPaceFromSlider(double totalSeconds) {
+    final total = totalSeconds.round();
+    emit(state.copyWith(
+      minutes: total ~/ 60,
+      seconds: total % 60,
+      status: PaceSubmitStatus.initial,
+    ));
   }
 
   Future<void> submit() async {
@@ -35,12 +40,7 @@ class PaceSelectorCubit extends Cubit<PaceSelectorState> {
     emit(state.copyWith(status: PaceSubmitStatus.loading));
 
     try {
-      await _repository.submitPace(PaceRequest(
-        minutes: state.minutes,
-        seconds: state.seconds,
-        distanceMeters: state.distanceMeters.round(),
-        swimmerLevel: state.swimmerLevel.label,
-      ));
+      await _repository.submitPace(PaceRequest(paceSeconds: state.paceSeconds));
       emit(state.copyWith(status: PaceSubmitStatus.success));
     } catch (e) {
       emit(state.copyWith(

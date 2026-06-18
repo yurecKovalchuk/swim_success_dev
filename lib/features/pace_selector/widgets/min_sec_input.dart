@@ -54,41 +54,58 @@ class _MinSecInputState extends State<MinSecInput> {
 
   String _fmt(int v) => v.toString().padLeft(2, '0');
 
-  Widget _buildField({
+  Widget _buildSpinner({
     required TextEditingController controller,
     required FocusNode focusNode,
+    required int currentValue,
     required int maxValue,
     required ValueChanged<int> onChanged,
     FocusNode? nextFocus,
   }) {
-    return SizedBox(
-      width: 72,
-      child: TextField(
-        controller: controller,
-        focusNode: focusNode,
-        textAlign: TextAlign.center,
-        keyboardType: TextInputType.number,
-        inputFormatters: [
-          FilteringTextInputFormatter.digitsOnly,
-          LengthLimitingTextInputFormatter(2),
-        ],
-        style: const TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
-        decoration: const InputDecoration(
-          border: OutlineInputBorder(),
-          contentPadding: EdgeInsets.symmetric(vertical: 12),
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        IconButton(
+          icon: const Icon(Icons.keyboard_arrow_up_rounded),
+          iconSize: 32,
+          onPressed: () => onChanged((currentValue + 1) % (maxValue + 1)),
         ),
-        onTap: () => controller.selection = TextSelection(
-          baseOffset: 0,
-          extentOffset: controller.text.length,
+        SizedBox(
+          width: 72,
+          child: TextField(
+            controller: controller,
+            focusNode: focusNode,
+            textAlign: TextAlign.center,
+            keyboardType: TextInputType.number,
+            inputFormatters: [
+              FilteringTextInputFormatter.digitsOnly,
+              LengthLimitingTextInputFormatter(2),
+            ],
+            style: const TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(),
+              contentPadding: EdgeInsets.symmetric(vertical: 12),
+            ),
+            onTap: () => controller.selection = TextSelection(
+              baseOffset: 0,
+              extentOffset: controller.text.length,
+            ),
+            onChanged: (value) {
+              final parsed = int.tryParse(value) ?? 0;
+              onChanged(parsed.clamp(0, maxValue));
+              if (value.length == 2 && nextFocus != null) {
+                nextFocus.requestFocus();
+              }
+            },
+          ),
         ),
-        onChanged: (value) {
-          final parsed = int.tryParse(value) ?? 0;
-          onChanged(parsed.clamp(0, maxValue));
-          if (value.length == 2 && nextFocus != null) {
-            nextFocus.requestFocus();
-          }
-        },
-      ),
+        IconButton(
+          icon: const Icon(Icons.keyboard_arrow_down_rounded),
+          iconSize: 32,
+          onPressed: () =>
+              onChanged(currentValue == 0 ? maxValue : currentValue - 1),
+        ),
+      ],
     );
   }
 
@@ -98,23 +115,25 @@ class _MinSecInputState extends State<MinSecInput> {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        _buildField(
+        _buildSpinner(
           controller: _minController,
           focusNode: _minFocus,
+          currentValue: widget.minutes,
           maxValue: 99,
           onChanged: widget.onMinutesChanged,
           nextFocus: _secFocus,
         ),
         const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 8),
+          padding: EdgeInsets.only(bottom: 4),
           child: Text(
             ':',
-            style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
           ),
         ),
-        _buildField(
+        _buildSpinner(
           controller: _secController,
           focusNode: _secFocus,
+          currentValue: widget.seconds,
           maxValue: 59,
           onChanged: widget.onSecondsChanged,
         ),
