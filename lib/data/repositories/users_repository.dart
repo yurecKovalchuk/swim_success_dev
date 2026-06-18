@@ -11,12 +11,9 @@ class UsersRepository implements IUsersRepository {
       : _dio = DioClient.create(baseUrl: ApiEndpoints.usersBaseUrl);
 
   @override
-  Future<List<User>> fetchUsers({int page = 1}) async {
-    final response = await _dio.get(
-      ApiEndpoints.users,
-      queryParameters: {'page': page},
-    );
-    final data = response.data['data'] as List<dynamic>;
+  Future<List<User>> fetchUsers() async {
+    final response = await _dio.get(ApiEndpoints.users);
+    final data = response.data as List<dynamic>;
     return data
         .map((json) => User.fromJson(json as Map<String, dynamic>))
         .toList();

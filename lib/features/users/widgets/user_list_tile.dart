@@ -14,17 +14,36 @@ class UserListTile extends StatelessWidget {
     return ListTile(
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       leading: CircleAvatar(
-        radius: 26,
-        backgroundImage: NetworkImage(user.avatar),
+        radius: 22,
+        backgroundColor: theme.colorScheme.primaryContainer,
+        child: Text(
+          user.name[0].toUpperCase(),
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: theme.colorScheme.onPrimaryContainer,
+          ),
+        ),
       ),
       title: Text(
-        '${user.firstName} ${user.lastName}',
+        user.name,
         style: const TextStyle(fontWeight: FontWeight.w600),
       ),
-      subtitle: Text(
-        user.email,
-        style: TextStyle(color: theme.colorScheme.onSurface.withAlpha(150)),
+      subtitle: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            user.email,
+            style: TextStyle(
+                color: theme.colorScheme.onSurface.withAlpha(150)),
+          ),
+          Text(
+            user.phone,
+            style: TextStyle(
+                color: theme.colorScheme.onSurface.withAlpha(130)),
+          ),
+        ],
       ),
+      isThreeLine: true,
       trailing: const Icon(Icons.chevron_right),
       onTap: onTap,
     );
