@@ -21,10 +21,8 @@ PaceRequest _$PaceRequestFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$PaceRequest {
-  int get minutes => throw _privateConstructorUsedError;
-  int get seconds => throw _privateConstructorUsedError;
-  int get distanceMeters => throw _privateConstructorUsedError;
-  String get swimmerLevel => throw _privateConstructorUsedError;
+  @JsonKey(name: 'pace_seconds')
+  int get paceSeconds => throw _privateConstructorUsedError;
 
   /// Serializes this PaceRequest to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -43,12 +41,7 @@ abstract class $PaceRequestCopyWith<$Res> {
     $Res Function(PaceRequest) then,
   ) = _$PaceRequestCopyWithImpl<$Res, PaceRequest>;
   @useResult
-  $Res call({
-    int minutes,
-    int seconds,
-    int distanceMeters,
-    String swimmerLevel,
-  });
+  $Res call({@JsonKey(name: 'pace_seconds') int paceSeconds});
 }
 
 /// @nodoc
@@ -65,30 +58,13 @@ class _$PaceRequestCopyWithImpl<$Res, $Val extends PaceRequest>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? minutes = null,
-    Object? seconds = null,
-    Object? distanceMeters = null,
-    Object? swimmerLevel = null,
-  }) {
+  $Res call({Object? paceSeconds = null}) {
     return _then(
       _value.copyWith(
-            minutes: null == minutes
-                ? _value.minutes
-                : minutes // ignore: cast_nullable_to_non_nullable
+            paceSeconds: null == paceSeconds
+                ? _value.paceSeconds
+                : paceSeconds // ignore: cast_nullable_to_non_nullable
                       as int,
-            seconds: null == seconds
-                ? _value.seconds
-                : seconds // ignore: cast_nullable_to_non_nullable
-                      as int,
-            distanceMeters: null == distanceMeters
-                ? _value.distanceMeters
-                : distanceMeters // ignore: cast_nullable_to_non_nullable
-                      as int,
-            swimmerLevel: null == swimmerLevel
-                ? _value.swimmerLevel
-                : swimmerLevel // ignore: cast_nullable_to_non_nullable
-                      as String,
           )
           as $Val,
     );
@@ -104,12 +80,7 @@ abstract class _$$PaceRequestImplCopyWith<$Res>
   ) = __$$PaceRequestImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({
-    int minutes,
-    int seconds,
-    int distanceMeters,
-    String swimmerLevel,
-  });
+  $Res call({@JsonKey(name: 'pace_seconds') int paceSeconds});
 }
 
 /// @nodoc
@@ -125,30 +96,13 @@ class __$$PaceRequestImplCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? minutes = null,
-    Object? seconds = null,
-    Object? distanceMeters = null,
-    Object? swimmerLevel = null,
-  }) {
+  $Res call({Object? paceSeconds = null}) {
     return _then(
       _$PaceRequestImpl(
-        minutes: null == minutes
-            ? _value.minutes
-            : minutes // ignore: cast_nullable_to_non_nullable
+        paceSeconds: null == paceSeconds
+            ? _value.paceSeconds
+            : paceSeconds // ignore: cast_nullable_to_non_nullable
                   as int,
-        seconds: null == seconds
-            ? _value.seconds
-            : seconds // ignore: cast_nullable_to_non_nullable
-                  as int,
-        distanceMeters: null == distanceMeters
-            ? _value.distanceMeters
-            : distanceMeters // ignore: cast_nullable_to_non_nullable
-                  as int,
-        swimmerLevel: null == swimmerLevel
-            ? _value.swimmerLevel
-            : swimmerLevel // ignore: cast_nullable_to_non_nullable
-                  as String,
       ),
     );
   }
@@ -158,27 +112,19 @@ class __$$PaceRequestImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$PaceRequestImpl implements _PaceRequest {
   const _$PaceRequestImpl({
-    required this.minutes,
-    required this.seconds,
-    required this.distanceMeters,
-    required this.swimmerLevel,
+    @JsonKey(name: 'pace_seconds') required this.paceSeconds,
   });
 
   factory _$PaceRequestImpl.fromJson(Map<String, dynamic> json) =>
       _$$PaceRequestImplFromJson(json);
 
   @override
-  final int minutes;
-  @override
-  final int seconds;
-  @override
-  final int distanceMeters;
-  @override
-  final String swimmerLevel;
+  @JsonKey(name: 'pace_seconds')
+  final int paceSeconds;
 
   @override
   String toString() {
-    return 'PaceRequest(minutes: $minutes, seconds: $seconds, distanceMeters: $distanceMeters, swimmerLevel: $swimmerLevel)';
+    return 'PaceRequest(paceSeconds: $paceSeconds)';
   }
 
   @override
@@ -186,18 +132,13 @@ class _$PaceRequestImpl implements _PaceRequest {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$PaceRequestImpl &&
-            (identical(other.minutes, minutes) || other.minutes == minutes) &&
-            (identical(other.seconds, seconds) || other.seconds == seconds) &&
-            (identical(other.distanceMeters, distanceMeters) ||
-                other.distanceMeters == distanceMeters) &&
-            (identical(other.swimmerLevel, swimmerLevel) ||
-                other.swimmerLevel == swimmerLevel));
+            (identical(other.paceSeconds, paceSeconds) ||
+                other.paceSeconds == paceSeconds));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, minutes, seconds, distanceMeters, swimmerLevel);
+  int get hashCode => Object.hash(runtimeType, paceSeconds);
 
   /// Create a copy of PaceRequest
   /// with the given fields replaced by the non-null parameter values.
@@ -215,23 +156,15 @@ class _$PaceRequestImpl implements _PaceRequest {
 
 abstract class _PaceRequest implements PaceRequest {
   const factory _PaceRequest({
-    required final int minutes,
-    required final int seconds,
-    required final int distanceMeters,
-    required final String swimmerLevel,
+    @JsonKey(name: 'pace_seconds') required final int paceSeconds,
   }) = _$PaceRequestImpl;
 
   factory _PaceRequest.fromJson(Map<String, dynamic> json) =
       _$PaceRequestImpl.fromJson;
 
   @override
-  int get minutes;
-  @override
-  int get seconds;
-  @override
-  int get distanceMeters;
-  @override
-  String get swimmerLevel;
+  @JsonKey(name: 'pace_seconds')
+  int get paceSeconds;
 
   /// Create a copy of PaceRequest
   /// with the given fields replaced by the non-null parameter values.

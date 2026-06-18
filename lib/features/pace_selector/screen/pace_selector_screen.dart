@@ -6,6 +6,13 @@ import 'package:swim_success_dev/features/pace_selector/bloc/pace_selector_state
 import 'package:swim_success_dev/features/pace_selector/widgets/min_sec_input.dart';
 import 'package:swim_success_dev/features/pace_selector/widgets/swimmer_level_badge.dart';
 
+// Slider range: 1:00 (60s) – 3:00 (180s)
+const double _kSliderMin = 60;
+const double _kSliderMax = 180;
+
+// Tick labels shown below slider
+const _kTickLabels = {70: '1:10', 90: '1:30', 120: '2:00', 150: '2:30'};
+
 @RoutePage()
 class PaceSelectorScreen extends StatelessWidget {
   const PaceSelectorScreen({super.key});
@@ -44,6 +51,9 @@ class _PaceSelectorView extends StatelessWidget {
           }
         },
         builder: (context, state) {
+          final sliderValue =
+              state.paceSeconds.toDouble().clamp(_kSliderMin, _kSliderMax);
+
           return SingleChildScrollView(
             padding: const EdgeInsets.all(24),
             child: Column(
@@ -61,6 +71,45 @@ class _PaceSelectorView extends StatelessWidget {
                 ),
                 const SizedBox(height: 16),
                 _SectionCard(
+                  title: 'Pace',
+                  child: Column(
+                    children: [
+                      SliderTheme(
+                        data: SliderTheme.of(context).copyWith(
+                          trackHeight: 4,
+                          thumbShape: const RoundSliderThumbShape(
+                            enabledThumbRadius: 10,
+                          ),
+                        ),
+                        child: Slider(
+                          value: sliderValue,
+                          min: _kSliderMin,
+                          max: _kSliderMax,
+                          onChanged: cubit.setPaceFromSlider,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 12),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: _kTickLabels.entries
+                              .map(
+                                (e) => Text(
+                                  e.value,
+                                  style: theme.textTheme.bodySmall?.copyWith(
+                                    color: theme.colorScheme.onSurface
+                                        .withAlpha(160),
+                                  ),
+                                ),
+                              )
+                              .toList(),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 16),
+                _SectionCard(
                   title: 'Detected Level',
                   child: Column(
                     children: [
@@ -69,41 +118,10 @@ class _PaceSelectorView extends StatelessWidget {
                       Text(
                         state.swimmerLevel.description,
                         style: theme.textTheme.bodySmall?.copyWith(
-                          color: theme.colorScheme.onSurface.withAlpha(150),
+                          color:
+                              theme.colorScheme.onSurface.withAlpha(150),
                         ),
                         textAlign: TextAlign.center,
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 16),
-                _SectionCard(
-                  title: 'Distance',
-                  trailing: Text(
-                    '${state.distanceMeters.round()} m',
-                    style: theme.textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  child: Column(
-                    children: [
-                      Slider(
-                        value: state.distanceMeters,
-                        min: 50,
-                        max: 1500,
-                        divisions: 29,
-                        label: '${state.distanceMeters.round()} m',
-                        onChanged: cubit.setDistance,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text('50 m', style: theme.textTheme.bodySmall),
-                            Text('1500 m', style: theme.textTheme.bodySmall),
-                          ],
-                        ),
                       ),
                     ],
                   ),
@@ -135,7 +153,7 @@ class _PaceSelectorView extends StatelessWidget {
                             ),
                           )
                         : const Text(
-                            'Submit Pace',
+                            'Continue',
                             style: TextStyle(fontSize: 16),
                           ),
                   ),
@@ -160,13 +178,11 @@ class _PaceSelectorView extends StatelessWidget {
 class _SectionCard extends StatelessWidget {
   final String title;
   final String? subtitle;
-  final Widget? trailing;
   final Widget child;
 
   const _SectionCard({
     required this.title,
     this.subtitle,
-    this.trailing,
     required this.child,
   });
 
@@ -177,32 +193,22 @@ class _SectionCard extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      style: theme.textTheme.titleMedium?.copyWith(
-                        color: theme.colorScheme.primary,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    if (subtitle != null)
-                      Text(
-                        subtitle!,
-                        style: theme.textTheme.bodySmall?.copyWith(
-                          color: theme.colorScheme.onSurface.withAlpha(150),
-                        ),
-                      ),
-                  ],
-                ),
-                if (trailing != null) trailing!, // ignore: use_null_aware_elements
-              ],
+            Text(
+              title,
+              style: theme.textTheme.titleMedium?.copyWith(
+                color: theme.colorScheme.primary,
+                fontWeight: FontWeight.w600,
+              ),
             ),
+            if (subtitle != null)
+              Text(
+                subtitle!,
+                style: theme.textTheme.bodySmall?.copyWith(
+                  color: theme.colorScheme.onSurface.withAlpha(150),
+                ),
+              ),
             const SizedBox(height: 16),
             child,
           ],

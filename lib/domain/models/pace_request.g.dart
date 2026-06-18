@@ -7,17 +7,7 @@ part of 'pace_request.dart';
 // **************************************************************************
 
 _$PaceRequestImpl _$$PaceRequestImplFromJson(Map<String, dynamic> json) =>
-    _$PaceRequestImpl(
-      minutes: (json['minutes'] as num).toInt(),
-      seconds: (json['seconds'] as num).toInt(),
-      distanceMeters: (json['distanceMeters'] as num).toInt(),
-      swimmerLevel: json['swimmerLevel'] as String,
-    );
+    _$PaceRequestImpl(paceSeconds: (json['pace_seconds'] as num).toInt());
 
 Map<String, dynamic> _$$PaceRequestImplToJson(_$PaceRequestImpl instance) =>
-    <String, dynamic>{
-      'minutes': instance.minutes,
-      'seconds': instance.seconds,
-      'distanceMeters': instance.distanceMeters,
-      'swimmerLevel': instance.swimmerLevel,
-    };
+    <String, dynamic>{'pace_seconds': instance.paceSeconds};
