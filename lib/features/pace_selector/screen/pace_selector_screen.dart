@@ -42,10 +42,35 @@ class _PaceSelectorView extends StatelessWidget {
       body: BlocConsumer<PaceSelectorCubit, PaceSelectorState>(
         listener: (context, state) {
           if (state.status == PaceSubmitStatus.success) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
+            showDialog<void>(
+              context: context,
+              builder: (_) => AlertDialog(
+                title: Text(context.l10n.paceSuccessTitle),
                 content: Text(context.l10n.paceSubmitSuccess),
-                backgroundColor: Colors.green,
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      cubit.reset();
+                    },
+                    child: Text(context.l10n.dialogOk),
+                  ),
+                ],
+              ),
+            );
+          } else if (state.status == PaceSubmitStatus.failure &&
+              state.errorMessage != null) {
+            showDialog<void>(
+              context: context,
+              builder: (_) => AlertDialog(
+                title: Text(context.l10n.paceErrorTitle),
+                content: Text(state.errorMessage!),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    child: Text(context.l10n.dialogOk),
+                  ),
+                ],
               ),
             );
           }
@@ -127,16 +152,6 @@ class _PaceSelectorView extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 12),
-                if (state.status == PaceSubmitStatus.failure &&
-                    state.errorMessage != null)
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 12),
-                    child: Text(
-                      state.errorMessage!,
-                      style: TextStyle(color: theme.colorScheme.error),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
                 _AquaGlassButton(
                   onPressed: state.status == PaceSubmitStatus.loading
                       ? null
@@ -144,14 +159,6 @@ class _PaceSelectorView extends StatelessWidget {
                   isLoading: state.status == PaceSubmitStatus.loading,
                   label: l10n.paceContinue,
                 ),
-                if (state.status == PaceSubmitStatus.success)
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8),
-                    child: TextButton(
-                      onPressed: cubit.reset,
-                      child: Text(l10n.paceReset),
-                    ),
-                  ),
               ],
             ),
           );

@@ -42,6 +42,15 @@ class AppLocalizationsUk extends AppLocalizations {
   String get paceSubmitSuccess => 'Темп успішно надіслано!';
 
   @override
+  String get paceSuccessTitle => 'Успіх';
+
+  @override
+  String get paceErrorTitle => 'Помилка';
+
+  @override
+  String get dialogOk => 'OK';
+
+  @override
   String get levelBeginner => 'Початківець';
 
   @override

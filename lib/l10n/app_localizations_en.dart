@@ -42,6 +42,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get paceSubmitSuccess => 'Pace submitted successfully!';
 
   @override
+  String get paceSuccessTitle => 'Success';
+
+  @override
+  String get paceErrorTitle => 'Error';
+
+  @override
+  String get dialogOk => 'OK';
+
+  @override
   String get levelBeginner => 'Beginner';
 
   @override
