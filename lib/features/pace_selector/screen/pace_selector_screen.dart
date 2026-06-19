@@ -37,10 +37,6 @@ class _PaceSelectorView extends StatelessWidget {
     final theme = Theme.of(context);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(context.l10n.paceSelectorTitle),
-        centerTitle: true,
-      ),
       body: BlocConsumer<PaceSelectorCubit, PaceSelectorState>(
         listener: (context, state) {
           if (state.status == PaceSubmitStatus.success) {
@@ -57,10 +53,10 @@ class _PaceSelectorView extends StatelessWidget {
           final sliderValue =
               state.paceSeconds.toDouble().clamp(_kSliderMin, _kSliderMax);
 
-          final bottomInset = MediaQuery.of(context).padding.bottom;
+          final insets = MediaQuery.of(context).padding;
           return SingleChildScrollView(
             padding: EdgeInsets.fromLTRB(
-              24, 24, 24, bottomInset + kFloatingNavBarHeight,
+              24, insets.top + 24, 24, insets.bottom + kFloatingNavBarHeight,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -68,11 +64,13 @@ class _PaceSelectorView extends StatelessWidget {
                 _SectionCard(
                   title: l10n.paceTargetPace,
                   subtitle: l10n.pacePer100m,
-                  child: MinSecInput(
-                    minutes: state.minutes,
-                    seconds: state.seconds,
-                    onMinutesChanged: cubit.setMinutes,
-                    onSecondsChanged: cubit.setSeconds,
+                  child: Center(
+                    child: MinSecInput(
+                      minutes: state.minutes,
+                      seconds: state.seconds,
+                      onMinutesChanged: cubit.setMinutes,
+                      onSecondsChanged: cubit.setSeconds,
+                    ),
                   ),
                 ),
                 const SizedBox(height: 16),
