@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -37,10 +39,6 @@ class _PaceSelectorView extends StatelessWidget {
     final theme = Theme.of(context);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(context.l10n.paceSelectorTitle),
-        centerTitle: true,
-      ),
       body: BlocConsumer<PaceSelectorCubit, PaceSelectorState>(
         listener: (context, state) {
           if (state.status == PaceSubmitStatus.success) {
@@ -57,10 +55,10 @@ class _PaceSelectorView extends StatelessWidget {
           final sliderValue =
               state.paceSeconds.toDouble().clamp(_kSliderMin, _kSliderMax);
 
-          final bottomInset = MediaQuery.of(context).padding.bottom;
+          final insets = MediaQuery.of(context).padding;
           return SingleChildScrollView(
             padding: EdgeInsets.fromLTRB(
-              24, 24, 24, bottomInset + kFloatingNavBarHeight,
+              16, insets.top + 12, 16, insets.bottom + kFloatingNavBarHeight,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -68,14 +66,16 @@ class _PaceSelectorView extends StatelessWidget {
                 _SectionCard(
                   title: l10n.paceTargetPace,
                   subtitle: l10n.pacePer100m,
-                  child: MinSecInput(
-                    minutes: state.minutes,
-                    seconds: state.seconds,
-                    onMinutesChanged: cubit.setMinutes,
-                    onSecondsChanged: cubit.setSeconds,
+                  child: Center(
+                    child: MinSecInput(
+                      minutes: state.minutes,
+                      seconds: state.seconds,
+                      onMinutesChanged: cubit.setMinutes,
+                      onSecondsChanged: cubit.setSeconds,
+                    ),
                   ),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 8),
                 _SectionCard(
                   title: l10n.paceSectionLabel,
                   child: Column(
@@ -106,7 +106,7 @@ class _PaceSelectorView extends StatelessWidget {
                     ],
                   ),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 8),
                 _SectionCard(
                   title: l10n.paceDetectedLevel,
                   child: Column(
@@ -126,7 +126,7 @@ class _PaceSelectorView extends StatelessWidget {
                     ],
                   ),
                 ),
-                const SizedBox(height: 24),
+                const SizedBox(height: 12),
                 if (state.status == PaceSubmitStatus.failure &&
                     state.errorMessage != null)
                   Padding(
@@ -137,26 +137,12 @@ class _PaceSelectorView extends StatelessWidget {
                       textAlign: TextAlign.center,
                     ),
                   ),
-                FilledButton(
+                _AquaGlassButton(
                   onPressed: state.status == PaceSubmitStatus.loading
                       ? null
                       : cubit.submit,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 4),
-                    child: state.status == PaceSubmitStatus.loading
-                        ? const SizedBox(
-                            height: 20,
-                            width: 20,
-                            child: CircularProgressIndicator(
-                              strokeWidth: 2,
-                              color: Colors.white,
-                            ),
-                          )
-                        : Text(
-                            l10n.paceContinue,
-                            style: const TextStyle(fontSize: 16),
-                          ),
-                  ),
+                  isLoading: state.status == PaceSubmitStatus.loading,
+                  label: l10n.paceContinue,
                 ),
                 if (state.status == PaceSubmitStatus.success)
                   Padding(
@@ -170,6 +156,92 @@ class _PaceSelectorView extends StatelessWidget {
             ),
           );
         },
+      ),
+    );
+  }
+}
+
+class _AquaGlassButton extends StatelessWidget {
+  final VoidCallback? onPressed;
+  final bool isLoading;
+  final String label;
+
+  const _AquaGlassButton({
+    required this.onPressed,
+    required this.isLoading,
+    required this.label,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final disabled = onPressed == null && !isLoading;
+    final borderOpacity = disabled ? 0.15 : 0.65;
+    final bgOpacity = disabled ? 0.04 : 0.10;
+
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(14),
+        gradient: LinearGradient(
+          colors: [
+            Colors.cyanAccent.withOpacity(borderOpacity),
+            Colors.blue.shade300.withOpacity(borderOpacity * 0.7),
+            Colors.cyan.shade700.withOpacity(borderOpacity * 0.5),
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+      ),
+      padding: const EdgeInsets.all(1.5),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(12.5),
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
+          child: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Colors.cyan.withOpacity(bgOpacity),
+                  Colors.blue.shade900.withOpacity(bgOpacity * 1.5),
+                ],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ),
+            ),
+            child: Material(
+              color: Colors.transparent,
+              child: InkWell(
+                onTap: onPressed,
+                splashColor: Colors.cyanAccent.withOpacity(0.12),
+                highlightColor: Colors.cyan.withOpacity(0.08),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  child: Center(
+                    child: isLoading
+                        ? SizedBox(
+                            height: 20,
+                            width: 20,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                              color: Colors.cyanAccent.withOpacity(0.8),
+                            ),
+                          )
+                        : Text(
+                            label,
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              letterSpacing: 1.2,
+                              color: disabled
+                                  ? Colors.cyan.withOpacity(0.35)
+                                  : Colors.cyanAccent.shade100,
+                            ),
+                          ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -191,13 +263,13 @@ class _SectionCard extends StatelessWidget {
     final theme = Theme.of(context);
     return Card(
       child: Padding(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(12),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
               title,
-              style: theme.textTheme.titleMedium?.copyWith(
+              style: theme.textTheme.titleSmall?.copyWith(
                 color: theme.colorScheme.primary,
                 fontWeight: FontWeight.w600,
               ),
@@ -209,7 +281,7 @@ class _SectionCard extends StatelessWidget {
                   color: theme.colorScheme.onSurface.withAlpha(150),
                 ),
               ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 10),
             child,
           ],
         ),

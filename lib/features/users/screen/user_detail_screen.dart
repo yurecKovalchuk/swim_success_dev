@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:swim_success_dev/app/app_shell.dart';
 import 'package:swim_success_dev/core/extensions/l10n_extension.dart';
 import 'package:swim_success_dev/domain/models/user.dart';
 
@@ -19,12 +20,25 @@ class UserDetailScreen extends StatelessWidget {
         centerTitle: true,
       ),
       body: SingleChildScrollView(
+        padding: EdgeInsets.only(
+          bottom: kFloatingNavBarHeight + MediaQuery.of(context).padding.bottom,
+        ),
         child: Column(
           children: [
             Container(
               width: double.infinity,
-              color: theme.colorScheme.primaryContainer,
               padding: const EdgeInsets.symmetric(vertical: 32),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Colors.cyanAccent.withOpacity(0.22),
+                    Colors.blue.shade400.withOpacity(0.30),
+                    Colors.cyan.shade800.withOpacity(0.40),
+                  ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+              ),
               child: Column(
                 children: [
                   CircleAvatar(
@@ -162,7 +176,7 @@ class _DetailRow extends StatelessWidget {
               ),
               Text(
                 value,
-                style: theme.textTheme.bodyLarge?.copyWith(
+                style: theme.textTheme.bodyMedium?.copyWith(
                   fontWeight: FontWeight.w500,
                 ),
               ),

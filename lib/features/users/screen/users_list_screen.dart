@@ -32,13 +32,12 @@ class _UsersListScreenState extends State<UsersListScreen> {
       child: Builder(
         builder: (context) {
           final cubit = context.read<UsersCubit>();
+          final topInset = MediaQuery.of(context).padding.top;
           return Scaffold(
-            appBar: AppBar(
-              title: Text(context.l10n.usersTitle),
-              centerTitle: true,
-              bottom: PreferredSize(
-                preferredSize: const Size.fromHeight(60),
-                child: Padding(
+            body: Column(
+              children: [
+                SizedBox(height: topInset + 8),
+                Padding(
                   padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
                   child: BlocBuilder<UsersCubit, UsersState>(
                     buildWhen: (prev, curr) =>
@@ -61,19 +60,22 @@ class _UsersListScreenState extends State<UsersListScreen> {
                     ),
                   ),
                 ),
-              ),
-            ),
-            body: BlocBuilder<UsersCubit, UsersState>(
-              builder: (context, state) => switch (state.status) {
-                UsersStatus.initial ||
-                UsersStatus.loading =>
-                  const Center(child: CircularProgressIndicator()),
-                UsersStatus.failure => _ErrorView(
-                    message: state.errorMessage,
-                    onRetry: cubit.fetchUsers,
+                Expanded(
+                  child: BlocBuilder<UsersCubit, UsersState>(
+                    builder: (context, state) => switch (state.status) {
+                      UsersStatus.initial ||
+                      UsersStatus.loading =>
+                        const Center(child: CircularProgressIndicator()),
+                      UsersStatus.failure => _ErrorView(
+                          message: state.errorMessage,
+                          onRetry: cubit.fetchUsers,
+                        ),
+                      UsersStatus.success =>
+                        _UsersList(state: state, cubit: cubit),
+                    },
                   ),
-                UsersStatus.success => _UsersList(state: state, cubit: cubit),
-              },
+                ),
+              ],
             ),
           );
         },

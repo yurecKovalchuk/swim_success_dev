@@ -67,11 +67,14 @@ class _MinSecInputState extends State<MinSecInput> {
       children: [
         IconButton(
           icon: const Icon(Icons.keyboard_arrow_up_rounded),
-          iconSize: 32,
+          iconSize: 24,
+          padding: EdgeInsets.zero,
+          constraints: const BoxConstraints(),
           onPressed: () => onChanged((currentValue + 1) % (maxValue + 1)),
         ),
+        const SizedBox(height: 4),
         SizedBox(
-          width: 72,
+          width: 60,
           child: TextField(
             controller: controller,
             focusNode: focusNode,
@@ -81,10 +84,10 @@ class _MinSecInputState extends State<MinSecInput> {
               FilteringTextInputFormatter.digitsOnly,
               LengthLimitingTextInputFormatter(2),
             ],
-            style: const TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+            style: const TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
             decoration: const InputDecoration(
               border: OutlineInputBorder(),
-              contentPadding: EdgeInsets.symmetric(vertical: 12),
+              contentPadding: EdgeInsets.symmetric(vertical: 8),
             ),
             onTap: () => controller.selection = TextSelection(
               baseOffset: 0,
@@ -99,9 +102,12 @@ class _MinSecInputState extends State<MinSecInput> {
             },
           ),
         ),
+        const SizedBox(height: 4),
         IconButton(
           icon: const Icon(Icons.keyboard_arrow_down_rounded),
-          iconSize: 32,
+          iconSize: 24,
+          padding: EdgeInsets.zero,
+          constraints: const BoxConstraints(),
           onPressed: () =>
               onChanged(currentValue == 0 ? maxValue : currentValue - 1),
         ),
@@ -123,12 +129,9 @@ class _MinSecInputState extends State<MinSecInput> {
           onChanged: widget.onMinutesChanged,
           nextFocus: _secFocus,
         ),
-        const Padding(
-          padding: EdgeInsets.only(bottom: 4),
-          child: Text(
-            ':',
-            style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
-          ),
+        const Text(
+          ':',
+          style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
         ),
         _buildSpinner(
           controller: _secController,
