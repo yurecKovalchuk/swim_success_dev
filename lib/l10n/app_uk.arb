@@ -14,6 +14,9 @@
   "paceContinue": "Продовжити",
   "paceReset": "Скинути",
   "paceSubmitSuccess": "Темп успішно надіслано!",
+  "paceSuccessTitle": "Успіх",
+  "paceErrorTitle": "Помилка",
+  "dialogOk": "OK",
 
   "levelBeginner": "Початківець",
   "levelIntermediate": "Середній",

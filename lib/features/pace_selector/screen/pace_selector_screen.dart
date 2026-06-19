@@ -7,6 +7,7 @@ import 'package:swim_success_dev/app/app_shell.dart';
 import 'package:swim_success_dev/core/extensions/l10n_extension.dart';
 import 'package:swim_success_dev/features/pace_selector/bloc/pace_selector_cubit.dart';
 import 'package:swim_success_dev/features/pace_selector/bloc/pace_selector_state.dart';
+import 'package:swim_success_dev/core/widgets/glass_dialog.dart';
 import 'package:swim_success_dev/features/pace_selector/widgets/min_sec_input.dart';
 import 'package:swim_success_dev/features/pace_selector/widgets/swimmer_level_badge.dart';
 
@@ -44,33 +45,29 @@ class _PaceSelectorView extends StatelessWidget {
           if (state.status == PaceSubmitStatus.success) {
             showDialog<void>(
               context: context,
-              builder: (_) => AlertDialog(
-                title: Text(context.l10n.paceSuccessTitle),
-                content: Text(context.l10n.paceSubmitSuccess),
-                actions: [
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                      cubit.reset();
-                    },
-                    child: Text(context.l10n.dialogOk),
-                  ),
-                ],
+              barrierColor: Colors.black.withOpacity(0.6),
+              builder: (_) => GlassDialog(
+                type: GlassDialogType.success,
+                title: context.l10n.paceSuccessTitle,
+                message: context.l10n.paceSubmitSuccess,
+                okLabel: context.l10n.dialogOk,
+                onOk: () {
+                  Navigator.of(context).pop();
+                  cubit.reset();
+                },
               ),
             );
           } else if (state.status == PaceSubmitStatus.failure &&
               state.errorMessage != null) {
             showDialog<void>(
               context: context,
-              builder: (_) => AlertDialog(
-                title: Text(context.l10n.paceErrorTitle),
-                content: Text(state.errorMessage!),
-                actions: [
-                  TextButton(
-                    onPressed: () => Navigator.of(context).pop(),
-                    child: Text(context.l10n.dialogOk),
-                  ),
-                ],
+              barrierColor: Colors.black.withOpacity(0.6),
+              builder: (_) => GlassDialog(
+                type: GlassDialogType.error,
+                title: context.l10n.paceErrorTitle,
+                message: state.errorMessage!,
+                okLabel: context.l10n.dialogOk,
+                onOk: () => Navigator.of(context).pop(),
               ),
             );
           }
