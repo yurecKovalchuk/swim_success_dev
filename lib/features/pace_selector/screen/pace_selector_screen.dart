@@ -56,7 +56,7 @@ class _PaceSelectorView extends StatelessWidget {
           final insets = MediaQuery.of(context).padding;
           return SingleChildScrollView(
             padding: EdgeInsets.fromLTRB(
-              24, insets.top + 24, 24, insets.bottom + kFloatingNavBarHeight,
+              16, insets.top + 12, 16, insets.bottom + kFloatingNavBarHeight,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -73,7 +73,7 @@ class _PaceSelectorView extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 8),
                 _SectionCard(
                   title: l10n.paceSectionLabel,
                   child: Column(
@@ -104,7 +104,7 @@ class _PaceSelectorView extends StatelessWidget {
                     ],
                   ),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 8),
                 _SectionCard(
                   title: l10n.paceDetectedLevel,
                   child: Column(
@@ -124,7 +124,7 @@ class _PaceSelectorView extends StatelessWidget {
                     ],
                   ),
                 ),
-                const SizedBox(height: 24),
+                const SizedBox(height: 12),
                 if (state.status == PaceSubmitStatus.failure &&
                     state.errorMessage != null)
                   Padding(
@@ -189,13 +189,13 @@ class _SectionCard extends StatelessWidget {
     final theme = Theme.of(context);
     return Card(
       child: Padding(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(12),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
               title,
-              style: theme.textTheme.titleMedium?.copyWith(
+              style: theme.textTheme.titleSmall?.copyWith(
                 color: theme.colorScheme.primary,
                 fontWeight: FontWeight.w600,
               ),
@@ -207,7 +207,7 @@ class _SectionCard extends StatelessWidget {
                   color: theme.colorScheme.onSurface.withAlpha(150),
                 ),
               ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 10),
             child,
           ],
         ),
