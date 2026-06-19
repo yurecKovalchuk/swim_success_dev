@@ -164,6 +164,24 @@ abstract class AppLocalizations {
   /// **'Pace submitted successfully!'**
   String get paceSubmitSuccess;
 
+  /// No description provided for @paceSuccessTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Success'**
+  String get paceSuccessTitle;
+
+  /// No description provided for @paceErrorTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Error'**
+  String get paceErrorTitle;
+
+  /// No description provided for @dialogOk.
+  ///
+  /// In en, this message translates to:
+  /// **'OK'**
+  String get dialogOk;
+
   /// No description provided for @levelBeginner.
   ///
   /// In en, this message translates to:
